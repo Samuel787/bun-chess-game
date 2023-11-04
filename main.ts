@@ -36,6 +36,11 @@ app.patch("/chess/:gameId", express.json(), (req, resp) => {
     const move = req.body
 
     console.log(`GameId: ${gameId}: `, move)
+    /**
+     * note that SSE cannot send binary data. 
+     * In other libraries, have to stringify the data before sending
+     */
+    sse.send({ event: gameId, data: move }) 
 
     resp.status(201).json({
         timestamp: (new Date()).getTime()
